@@ -1,13 +1,14 @@
 #ifndef DOGBREEDS_LABRADOR_BOUNDEDQUEUE_H
 #define DOGBREEDS_LABRADOR_BOUNDEDQUEUE_H
 
+#include "QueueWrapperInterface.h"
 #include <queue>
 
 namespace DogBreeds{
     namespace Labrador{
         
         template<typename T>
-        class BoundedQueue{
+        class BoundedQueue : public QueueWrapperInterface<T>{
             private:
                 std::queue<T> m_queue;
                 size_t  m_maxSize;
