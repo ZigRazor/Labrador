@@ -19,14 +19,14 @@ if(DEBUG)
 
 endif(DEBUG)
 
-#add_library(    ${PROJECT_NAME} SHARED
-#                ${SRC_FILES}
-#                )
+add_library(    ${PROJECT_NAME} SHARED
+                ${SRC_FILES}
+                )
 
-#target_include_directories( ${PROJECT_NAME} PUBLIC 
-#                            include/
-#                            )
+target_include_directories( ${PROJECT_NAME} PUBLIC 
+                            include/
+                            )
 
-#target_link_libraries(  ${PROJECT_NAME} PUBLIC )
+target_link_libraries(  ${PROJECT_NAME} PUBLIC )
 
 add_subdirectory("example")

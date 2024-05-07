@@ -1,35 +1,40 @@
-#ifndef DOGBREEDS_LABRADOR_BOUNDEDQUEUE_H
-#define DOGBREEDS_LABRADOR_BOUNDEDQUEUE_H
+#ifndef DOGBREEDS_LABRADOR_CONCURRENTBOUNDEDQUEUE_H
+#define DOGBREEDS_LABRADOR_CONCURRENTBOUNDEDQUEUE_H
 
 #include "QueueWrapperInterface.h"
 #include "BoundedInterface.h"
+#include "ConcurrentInterface.h"
 #include <queue>
 
 namespace DogBreeds{
     namespace Labrador{
         
         template<typename T>
-        class BoundedQueue : public QueueWrapperInterface<T>, public BoundedInterface{
+        class ConcurrentBoundedQueue : public QueueWrapperInterface<T>, public ConcurrentInterface,  public BoundedInterface{
             public:
-                BoundedQueue(size_t  maxSize):BoundedInterface(maxSize) {}
+                ConcurrentBoundedQueue(size_t  maxSize):ConcurrentInterface(),BoundedInterface(maxSize) {}
 
-                virtual ~BoundedQueue() = default;
+                virtual ~ConcurrentBoundedQueue() = default;
 
-                BoundedQueue(const BoundedQueue&) = delete;
+                ConcurrentBoundedQueue(const BoundedQueue&) = delete;
 
                 T front() override{
+                    std::lock_guard<std::mutex> lock(m_mutex);
                     return m_queue.front();
                 }
 
                 T back() override{
+                    std::lock_guard<std::mutex> lock(m_mutex);
                     return m_queue.back();
                 }
 
                 void pop() override{
+                    std::lock_guard<std::mutex> lock(m_mutex);
                     m_queue.pop();
                 }
 
                 void push (const T& val) override{
+                    std::lock_guard<std::mutex> lock(m_mutex);
                     if(m_queue.size() < m_maxSize){
                         m_queue.push(val);
                     }else{
@@ -38,6 +43,7 @@ namespace DogBreeds{
                 }
                 
                 void push (T&& val) override{
+                    std::lock_guard<std::mutex> lock(m_mutex);
                     if(m_queue.size() < m_maxSize){
                         m_queue.push(val);
                     }else{
@@ -46,18 +52,23 @@ namespace DogBreeds{
                 }
 
                 bool empty() const override{
+                    std::lock_guard<std::mutex> lock(m_mutex);
                     return m_queue.empty();
                 }
 
                 size_t size() const override{
+                    std::lock_guard<std::mutex> lock(m_mutex);
                     return m_queue.size();
                 }
 
                 template <class... Args> void emplace (Args&&... args){
+                    std::lock_guard<std::mutex> lock(m_mutex);
                     m_queue.emplace(args...);
                 }
 
-                void swap (BoundedQueue& x) {
+                void swap (SyncBoundedQueue& x) {
+                    std::lock_guard<std::mutex> lock(m_mutex);
+                    std::lock_guard<std::mutex> lock(x.m_mutex);
                     if(x.m_queue.size() <= this.m_maxSize && this.m_queue.size() <= x.m_maxSize){
                         this.m_queue.swap(x.m_queue);
                     }else{
@@ -66,6 +77,7 @@ namespace DogBreeds{
                 }
 
                 void setMaxSize(size_t  maxSize) override{
+                    std::lock_guard<std::mutex> lock(m_mutex);
                     if(maxSize < m_queue.size()){
                         //TODO return error
                     }else{
@@ -79,4 +91,4 @@ namespace DogBreeds{
     }
 }
 
-#endif //DOGBREEDS_LABRADOR_BOUNDEDQUEUE_H
+#endif //DOGBREEDS_LABRADOR_CONCURRENTBOUNDEDQUEUE_H

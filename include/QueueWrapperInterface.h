@@ -1,20 +1,19 @@
-#ifndef DOGBREEDS_LABRADOR_QUEUEWRAPPER_H
-#define DOGBREEDS_LABRADOR_QUEUEWRAPPER_H
+#ifndef DOGBREEDS_LABRADOR_QUEUEWRAPPERINTERFACE_H
+#define DOGBREEDS_LABRADOR_QUEUEWRAPPERINTERFACE_H
+
+#include <queue>
 
 namespace DogBreeds{
     namespace Labrador{
         
         template<typename T>
         class QueueWrapperInterface{
+            protected:
+                std::queue<T> m_queue;
             public:
-                virtual T& front() = 0;
+                virtual T front() = 0;
 
-                virtual const T& front() const = 0;
-
-                virtual T& back() = 0;
-
-                virtual const T& back() const = 0;
-
+                virtual T back() = 0;
 
                 virtual void pop() = 0;
 
@@ -31,4 +30,4 @@ namespace DogBreeds{
     }
 }
 
-#endif //DOGBREEDS_LABRADOR_BOUNDEDQUEUE_H
+#endif //DOGBREEDS_LABRADOR_QUEUEWRAPPERINTERFACE_H
