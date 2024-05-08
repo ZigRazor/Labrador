@@ -9,13 +9,11 @@ namespace DogBreeds{
         class ConcurrentInterface{
             protected:
                 std::mutex  m_mutex;
-                std::condition_variable m_cv;
             public:
                 ConcurrentInterface() = default;
                 virtual ~ConcurrentInterface() = default;
 
                 std::mutex& getMutex();
-                std::condition_variable& getConditionVariable();
 
 
         };

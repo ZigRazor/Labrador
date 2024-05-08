@@ -7,8 +7,5 @@ namespace DogBreeds{
             return m_mutex;
         }
 
-        std::condition_variable& ConcurrentInterface::getConditionVariable(){
-            return m_cv;
-        }
     }
 }

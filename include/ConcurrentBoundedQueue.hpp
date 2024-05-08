@@ -16,72 +16,49 @@ namespace DogBreeds{
 
                 virtual ~ConcurrentBoundedQueue() = default;
 
-                ConcurrentBoundedQueue(const BoundedQueue&) = delete;
+                ConcurrentBoundedQueue(const ConcurrentBoundedQueue&) = delete;
 
-                T front() override{
-                    std::lock_guard<std::mutex> lock(m_mutex);
-                    return m_queue.front();
+                T dequeue() override{
+                    std::lock_guard<std::mutex> lock(this->m_mutex);
+                    auto& elem = this->m_queue.front();
+                    this->m_queue.pop();
+                    return elem;
                 }
 
-                T back() override{
-                    std::lock_guard<std::mutex> lock(m_mutex);
-                    return m_queue.back();
-                }
-
-                void pop() override{
-                    std::lock_guard<std::mutex> lock(m_mutex);
-                    m_queue.pop();
-                }
-
-                void push (const T& val) override{
-                    std::lock_guard<std::mutex> lock(m_mutex);
-                    if(m_queue.size() < m_maxSize){
-                        m_queue.push(val);
+                void enqueue (const T& val) override{
+                    std::lock_guard<std::mutex> lock(this->m_mutex);
+                    if(this->m_queue.size() < this->m_maxSize){
+                        this->m_queue.push(val);
                     }else{
                         //TODO return error
                     }
                 }
                 
-                void push (T&& val) override{
-                    std::lock_guard<std::mutex> lock(m_mutex);
-                    if(m_queue.size() < m_maxSize){
-                        m_queue.push(val);
+                void enqueue (T&& val) override{
+                    std::lock_guard<std::mutex> lock(this->m_mutex);
+                    if(this->m_queue.size() < this->m_maxSize){
+                        this->m_queue.push(val);
                     }else{
                         //TODO return error
                     }
                 }
 
-                bool empty() const override{
-                    std::lock_guard<std::mutex> lock(m_mutex);
-                    return m_queue.empty();
+                bool empty() override{
+                    std::lock_guard<std::mutex> lock(this->m_mutex);
+                    return this->m_queue.empty();
                 }
 
-                size_t size() const override{
-                    std::lock_guard<std::mutex> lock(m_mutex);
-                    return m_queue.size();
-                }
-
-                template <class... Args> void emplace (Args&&... args){
-                    std::lock_guard<std::mutex> lock(m_mutex);
-                    m_queue.emplace(args...);
-                }
-
-                void swap (SyncBoundedQueue& x) {
-                    std::lock_guard<std::mutex> lock(m_mutex);
-                    std::lock_guard<std::mutex> lock(x.m_mutex);
-                    if(x.m_queue.size() <= this.m_maxSize && this.m_queue.size() <= x.m_maxSize){
-                        this.m_queue.swap(x.m_queue);
-                    }else{
-                        //TODO return error
-                    }
+                size_t size() override{
+                    std::lock_guard<std::mutex> lock(this->m_mutex);
+                    return this->m_queue.size();
                 }
 
                 void setMaxSize(size_t  maxSize) override{
-                    std::lock_guard<std::mutex> lock(m_mutex);
-                    if(maxSize < m_queue.size()){
+                    std::lock_guard<std::mutex> lock(this->m_mutex);
+                    if(maxSize < this->m_queue.size()){
                         //TODO return error
                     }else{
-                        m_maxSize = maxSize;
+                        this->m_maxSize = maxSize;
                     }
                 }
 

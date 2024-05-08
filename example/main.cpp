@@ -1,32 +1,103 @@
 #include <iostream>
 #include "BoundedQueue.hpp"
+#include "ConcurrentQueue.hpp"
+#include "ConcurrentBoundedQueue.hpp"
 
-int main(){
-    std::cout << "Example BoundedQueue" << std::endl;
+
+void exampleBoundedQueue(){
+     std::cout << "Example BoundedQueue" << std::endl;
 
     DogBreeds::Labrador::BoundedQueue<int> intBoundedQueue(10);
 
     DogBreeds::Labrador::QueueWrapperInterface<int>&  queueWrapperInt = intBoundedQueue;
-    queueWrapperInt.push(1);
+    queueWrapperInt.enqueue(1);
     std::cout << "Queue Size" << queueWrapperInt.size() << std::endl;
-    queueWrapperInt.push(2);
+    queueWrapperInt.enqueue(2);
     std::cout << "Queue Size" << queueWrapperInt.size() << std::endl;
-    queueWrapperInt.push(3);
+    queueWrapperInt.enqueue(3);
     std::cout << "Queue Size" << queueWrapperInt.size() << std::endl;
-    queueWrapperInt.push(4);
+    queueWrapperInt.enqueue(4);
     std::cout << "Queue Size" << queueWrapperInt.size() << std::endl;
-    queueWrapperInt.push(5);
+    queueWrapperInt.enqueue(5);
     std::cout << "Queue Size" << queueWrapperInt.size() << std::endl;
-    queueWrapperInt.push(6);
+    queueWrapperInt.enqueue(6);
     std::cout << "Queue Size" << queueWrapperInt.size() << std::endl;
-    queueWrapperInt.push(7);
+    queueWrapperInt.enqueue(7);
     std::cout << "Queue Size" << queueWrapperInt.size() << std::endl;
-    queueWrapperInt.push(8);
+    queueWrapperInt.enqueue(8);
     std::cout << "Queue Size" << queueWrapperInt.size() << std::endl;
-    queueWrapperInt.push(9);
+    queueWrapperInt.enqueue(9);
     std::cout << "Queue Size" << queueWrapperInt.size() << std::endl;
-    queueWrapperInt.push(10);
+    queueWrapperInt.enqueue(10);
     std::cout << "Queue Size" << queueWrapperInt.size() << std::endl;
-    queueWrapperInt.push(11);
+    queueWrapperInt.enqueue(11);
     std::cout << "Queue Size" << queueWrapperInt.size() << std::endl;
+}
+
+void exampleConcurrentQueue(){
+     std::cout << "Example ConcurrentQueue" << std::endl;
+
+    DogBreeds::Labrador::ConcurrentQueue<int> intConcurrentQueue;
+
+    DogBreeds::Labrador::QueueWrapperInterface<int>&  queueWrapperInt = intConcurrentQueue;
+    queueWrapperInt.enqueue(1);
+    std::cout << "Queue Size" << queueWrapperInt.size() << std::endl;
+    queueWrapperInt.enqueue(2);
+    std::cout << "Queue Size" << queueWrapperInt.size() << std::endl;
+    queueWrapperInt.enqueue(3);
+    std::cout << "Queue Size" << queueWrapperInt.size() << std::endl;
+    queueWrapperInt.enqueue(4);
+    std::cout << "Queue Size" << queueWrapperInt.size() << std::endl;
+    queueWrapperInt.enqueue(5);
+    std::cout << "Queue Size" << queueWrapperInt.size() << std::endl;
+    queueWrapperInt.enqueue(6);
+    std::cout << "Queue Size" << queueWrapperInt.size() << std::endl;
+    queueWrapperInt.enqueue(7);
+    std::cout << "Queue Size" << queueWrapperInt.size() << std::endl;
+    queueWrapperInt.enqueue(8);
+    std::cout << "Queue Size" << queueWrapperInt.size() << std::endl;
+    queueWrapperInt.enqueue(9);
+    std::cout << "Queue Size" << queueWrapperInt.size() << std::endl;
+    queueWrapperInt.enqueue(10);
+    std::cout << "Queue Size" << queueWrapperInt.size() << std::endl;
+    queueWrapperInt.enqueue(11);
+    std::cout << "Queue Size" << queueWrapperInt.size() << std::endl;
+
+}
+
+void exampleConcurrentBoundedQueue(){
+     std::cout << "Example ConcurrentBoundedQueue" << std::endl;
+
+    DogBreeds::Labrador::ConcurrentBoundedQueue<int> intConcurrentBoundedQueue(10);
+
+    DogBreeds::Labrador::QueueWrapperInterface<int>&  queueWrapperInt = intConcurrentBoundedQueue;
+    queueWrapperInt.enqueue(1);
+    std::cout << "Queue Size" << queueWrapperInt.size() << std::endl;
+    queueWrapperInt.enqueue(2);
+    std::cout << "Queue Size" << queueWrapperInt.size() << std::endl;
+    queueWrapperInt.enqueue(3);
+    std::cout << "Queue Size" << queueWrapperInt.size() << std::endl;
+    queueWrapperInt.enqueue(4);
+    std::cout << "Queue Size" << queueWrapperInt.size() << std::endl;
+    queueWrapperInt.enqueue(5);
+    std::cout << "Queue Size" << queueWrapperInt.size() << std::endl;
+    queueWrapperInt.enqueue(6);
+    std::cout << "Queue Size" << queueWrapperInt.size() << std::endl;
+    queueWrapperInt.enqueue(7);
+    std::cout << "Queue Size" << queueWrapperInt.size() << std::endl;
+    queueWrapperInt.enqueue(8);
+    std::cout << "Queue Size" << queueWrapperInt.size() << std::endl;
+    queueWrapperInt.enqueue(9);
+    std::cout << "Queue Size" << queueWrapperInt.size() << std::endl;
+    queueWrapperInt.enqueue(10);
+    std::cout << "Queue Size" << queueWrapperInt.size() << std::endl;
+    queueWrapperInt.enqueue(11);
+    std::cout << "Queue Size" << queueWrapperInt.size() << std::endl;
+
+}
+
+int main(){
+   exampleBoundedQueue();
+   exampleConcurrentQueue();
+   exampleConcurrentBoundedQueue();
 }
