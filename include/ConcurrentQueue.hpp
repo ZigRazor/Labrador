@@ -1,52 +1,47 @@
 #ifndef DOGBREEDS_LABRADOR_CONCURRENTQUEUE_H
 #define DOGBREEDS_LABRADOR_CONCURRENTQUEUE_H
 
-#include "QueueWrapperInterface.h"
-#include "ConcurrentInterface.h"
 #include <queue>
+#include <mutex>
 
-namespace DogBreeds{
-    namespace Labrador{
-        
-        template<typename T>
-        class ConcurrentQueue : public QueueWrapperInterface<T>, public ConcurrentInterface{
-            public:
-                ConcurrentQueue():QueueWrapperInterface<T>(),ConcurrentInterface() {}
+namespace DogBreeds
+{
+    namespace Labrador
+    {
+        template <typename T>
+        class ConcurrentQueue : public AbstractQueue<T>
+        {
+        private:
+            std::queue<T> queue;
+            mutable std::mutex mtx;
 
-                virtual ~ConcurrentQueue() = default;
+        public:
+            void enqueue(const T &item) override
+            {
+                std::lock_guard<std::mutex> lock(mtx);
+                queue.push(item);
+            }
 
-                ConcurrentQueue(const ConcurrentQueue&) = delete;
-
-                T dequeue() override{
-                    std::lock_guard<std::mutex> lock(this->m_mutex);
-                    auto& elem = this->m_queue.front();
-                    this->m_queue.pop();
-                    return elem;
+            T dequeue() override
+            {
+                std::lock_guard<std::mutex> lock(mtx);
+                if (queue.empty())
+                {
+                    throw std::runtime_error("Queue is empty");
                 }
+                T item = queue.front();
+                queue.pop();
+                return item;
+            }
 
-                void enqueue (const T& val) override{
-                    std::lock_guard<std::mutex> lock(this->m_mutex);
-                    this->m_queue.push(val);
-                }
-                
-                void enqueue (T&& val) override{
-                    std::lock_guard<std::mutex> lock(this->m_mutex);
-                    this->m_queue.push(val);
-                }
-
-                bool empty() override{
-                    std::lock_guard<std::mutex> lock(this->m_mutex);
-                    return this->m_queue.empty();
-                }
-
-                size_t size() override{
-                    std::lock_guard<std::mutex> lock(this->m_mutex);
-                    return this->m_queue.size();
-                }
+            size_t size() const override{
+                std::lock_guard<std::mutex> lock(mtx);
+                return queue.size();
+            }
 
         };
 
     }
 }
 
-#endif //DOGBREEDS_LABRADOR_CONCURRENTQUEUE_H
+#endif // DOGBREEDS_LABRADOR_CONCURRENTQUEUE_H

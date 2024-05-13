@@ -1,5 +1,5 @@
-#ifndef DOGBREEDS_LABRADOR_BOUNDEDQUEUE_H
-#define DOGBREEDS_LABRADOR_BOUNDEDQUEUE_H
+#ifndef DOGBREEDS_LABRADOR_LWBOUNDEDQUEUE_H
+#define DOGBREEDS_LABRADOR_LWBOUNDEDQUEUE_H
 
 #include <queue>
 #include <mutex>
@@ -12,7 +12,7 @@ namespace DogBreeds
     {
 
         template <typename T>
-        class BoundedQueue : public AbstractQueue<T>
+        class LWBoundedQueue : public AbstractQueue<T>
         {
         private:
             std::queue<T> queue;
@@ -22,7 +22,7 @@ namespace DogBreeds
             size_t max_size;
 
         public:
-            BoundedQueue(size_t size) : max_size(size) {}
+            LWBoundedQueue(size_t size) : max_size(size) {}
 
             void enqueue(const T &item) override
             {
@@ -37,20 +37,21 @@ namespace DogBreeds
 
             T dequeue() override
             {
-                T item;
                 {
-                    std::unique_lock<std::mutex> lock(mtx);
-                    deq_cv.wait_for(lock,std::chrono::microseconds(10), [this]()
-                                { return !queue.empty(); });
-                    if(!queue.empty()){
-                        item = queue.front();
-                        queue.pop();
-                    }else{
-                        throw std::runtime_error("Queue is empty");
+                    while (true)
+                    {
+                        std::unique_lock<std::mutex> lock(mtx);
+                        deq_cv.wait_for(lock, std::chrono::microseconds(10), [this]()
+                                        { return !queue.empty(); });
+                        if (!queue.empty())
+                        {
+                            T item = queue.front();
+                            queue.pop();
+                            enq_cv.notify_one(); // Notify waiting enqueue operations
+                            return item;
+                        }
                     }
                 }
-                enq_cv.notify_one(); // Notify waiting enqueue operations
-                return item;
             }
 
             size_t size() const override
@@ -58,10 +59,9 @@ namespace DogBreeds
                 std::lock_guard<std::mutex> lock(mtx);
                 return queue.size();
             }
-
         };
 
     }
 }
 
-#endif // DOGBREEDS_LABRADOR_BOUNDEDQUEUE_H
+#endif // DOGBREEDS_LABRADOR_LWBOUNDEDQUEUE_H

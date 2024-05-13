@@ -1,8 +1,2 @@
-add_executable(  ExampleBoundedQueue main.cpp
-                )
-
-target_include_directories( ExampleBoundedQueue PUBLIC 
-                            "${PROJECT_SOURCE_DIR}/include"
-                            )
-
-target_link_libraries(  ExampleBoundedQueue PUBLIC Labrador)
+add_subdirectory("example1")
+add_subdirectory("example2")
