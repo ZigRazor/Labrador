@@ -46,10 +46,10 @@ namespace DogBreeds
                         if (!queue.empty())
                         {
                             T item = queue.front();
-                            queue.pop();
-                            enq_cv.notify_one(); // Notify waiting enqueue operations
+                            queue.pop();                            
                             return item;
                         }
+                        enq_cv.notify_one(); // Notify waiting enqueue operations
                     }
                 }
             }

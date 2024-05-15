@@ -3,6 +3,7 @@
 
 #include <queue>
 #include <mutex>
+#include "AbstractQueue.h"
 
 namespace DogBreeds
 {

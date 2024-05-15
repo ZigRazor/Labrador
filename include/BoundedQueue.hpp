@@ -28,9 +28,13 @@ namespace DogBreeds
             {
                 {
                     std::unique_lock<std::mutex> lock(mtx);
-                    enq_cv.wait(lock, [this]()
+                    enq_cv.wait_for(lock,std::chrono::microseconds(10), [this]()
                                 { return queue.size() < max_size; });
-                    queue.push(item);
+                                if(queue.size() < max_size){
+                                    queue.push(item);
+                                }else{
+                                    throw std::runtime_error("Queue is full");
+                                }
                 }
                 deq_cv.notify_one(); // Notify waiting dequeue operations
             }
