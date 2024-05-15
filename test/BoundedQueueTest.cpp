@@ -71,8 +71,17 @@ TEST(BoundedQueueTest, ConcurrentAccess)
     BoundedQueue<int> queue(5);
     constexpr int num_elements = 1000;
     std::thread producer([&queue]() {
-        for (int i = 0; i < num_elements; ++i)
-            queue.enqueue(i);
+        for (int i = 0; i < num_elements; ++i){
+            bool inserted = false;
+            while(!inserted){
+                inserted = true;
+                try{
+                    queue.enqueue(i);
+                }catch(std::runtime_error){
+                    inserted=false;
+                }
+            }
+        }
     });
     std::thread consumer([&queue]() {
         for (int i = 0; i < num_elements; ++i)

@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 #include "ConcurrentQueue.hpp"
 #include <thread>
+#include <atomic>
 
 using namespace DogBreeds::Labrador;
 
