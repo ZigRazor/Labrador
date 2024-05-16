@@ -21,7 +21,7 @@ if(CODE_COVERAGE)
 
 endif(CODE_COVERAGE)
 
-option(TEST "Enable Test" OFF)
+option(LABRADOR_TEST "Enable Test" OFF)
 if(TEST)
     include(${CPM_DOWNLOAD_LOCATION})
 
@@ -33,16 +33,16 @@ if(TEST)
     )
 
     file (GLOB TEST_FILES "*.cpp" "*.hpp" "*.h")
-    add_executable(test_exe ${TEST_FILES})
+    add_executable(jack_russell_test_exe ${TEST_FILES})
 
-    target_compile_definitions(test_exe
+    target_compile_definitions(jack_russell_test_exe
         PUBLIC WITH_COMPRESSION
     )
-    target_include_directories(test_exe
+    target_include_directories(jack_russell_test_exe
         PUBLIC "${PROJECT_SOURCE_DIR}/include"
     )
 
-    target_link_libraries(test_exe
+    target_link_libraries(jack_russell_test_exe
         PUBLIC GTest::gtest_main
         pthread
     )
