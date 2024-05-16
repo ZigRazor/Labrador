@@ -33,23 +33,23 @@ if(TEST)
     )
 
     file (GLOB TEST_FILES "*.cpp" "*.hpp" "*.h")
-    add_executable(jack_russell_test_exe ${TEST_FILES})
+    add_executable(labrador_test_exe ${TEST_FILES})
 
-    target_compile_definitions(jack_russell_test_exe
+    target_compile_definitions(labrador_test_exe
         PUBLIC WITH_COMPRESSION
     )
-    target_include_directories(jack_russell_test_exe
+    target_include_directories(labrador_test_exe
         PUBLIC "${PROJECT_SOURCE_DIR}/include"
     )
 
-    target_link_libraries(jack_russell_test_exe
+    target_link_libraries(labrador_test_exe
         PUBLIC GTest::gtest_main
         pthread
     )
 
     enable_testing()
 
-    add_test(test_bounded_queue test_exe --gtest_filter=BoundedQueueTest*)
-    add_test(test_concurrent_queue test_exe --gtest_filter=ConcurrentQueueTest*)
+    add_test(test_bounded_queue labrador_test_exe --gtest_filter=BoundedQueueTest*)
+    add_test(test_concurrent_queue labrador_test_exe --gtest_filter=ConcurrentQueueTest*)
    
 endif(TEST)

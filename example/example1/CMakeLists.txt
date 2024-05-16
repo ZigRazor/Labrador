@@ -1,8 +1,8 @@
-add_executable(  JackRussellExample1 main.cpp
+add_executable(  LabradorExample1 main.cpp
                 )
 
-target_include_directories( JackRussellExample1 PUBLIC 
+target_include_directories( LabradorExample1 PUBLIC 
                             "${PROJECT_SOURCE_DIR}/include"
                             )
 
-target_link_libraries(  JackRussellExample1 PUBLIC pthread)
+target_link_libraries(  LabradorExample1 PUBLIC pthread)
