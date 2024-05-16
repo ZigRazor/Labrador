@@ -1,2 +1,5 @@
-add_subdirectory("example1")
-add_subdirectory("example2")
+option(EXAMPLE "Enable Example" OFF)
+if(EXAMPLE)
+    add_subdirectory("example1")
+    add_subdirectory("example2")
+endif(EXAMPLE)
