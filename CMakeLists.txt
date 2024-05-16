@@ -8,7 +8,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 file( GLOB SRC_FILES "src/*.cpp" )
 
-message ( ERROR "SRC_FILES: ${SRC_FILES}" )
+#message ( ERROR "SRC_FILES: ${SRC_FILES}" )
 
 option(DEBUG "Enable Debug" OFF)
 if(DEBUG)
@@ -46,6 +46,15 @@ if(NOT (EXISTS ${CPM_DOWNLOAD_LOCATION}))
     	${CPM_DOWNLOAD_LOCATION}
 	)
 endif()
+
+file( GLOB HEADERS_FILES "include/*.h*" )
+
+#message ( ERROR "HEADERS_FILES: ${HEADERS_FILES}" )
+
+add_library( ${PROJECT_NAME} INTERFACE )
+target_sources ( ${PROJECT_NAME} INTERFACE ${HEADERS_FILES} )
+target_compile_features( ${PROJECT_NAME} INTERFACE cxx_std_20 )
+target_include_directories( ${PROJECT_NAME} INTERFACE include/ )
 
 add_subdirectory("test")
 add_subdirectory("example")
