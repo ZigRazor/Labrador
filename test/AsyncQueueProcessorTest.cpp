@@ -9,7 +9,7 @@ using namespace DogBreeds::Labrador;
 // dalla coda in modo asincrono
 TEST(AsyncQueueProcessorTest, ProcessItems) {
   auto queue = std::make_shared<ConcurrentQueue<int>>();
-  AsyncQueueProcessor<int> processor(queue, [](int &item) {
+  AsyncQueueProcessor<int> processor(queue, [](const int &item) {
     // Effettua l'elaborazione dell'elemento (in questo caso, stampa l'elemento)
     std::cout << "Processed item: " << item << std::endl;
   });

@@ -21,35 +21,33 @@ if(CODE_COVERAGE)
 
 endif(CODE_COVERAGE)
 
-option(LABRADOR_TEST "Enable Test" OFF)
-if(TEST)
-    include(${CPM_DOWNLOAD_LOCATION})
 
-    CPMAddPackage(
-        NAME googletest
-        GITHUB_REPOSITORY google/googletest
-        GIT_TAG origin/main
-        OPTIONS "gtest_forced_shared_crt ON CACHE BOOL FORCE"
-    )
+include(${CPM_DOWNLOAD_LOCATION})
 
-    file (GLOB TEST_FILES "*.cpp" "*.hpp" "*.h")
-    add_executable(labrador_test_exe ${TEST_FILES})
+CPMAddPackage(
+    NAME googletest
+    GITHUB_REPOSITORY google/googletest
+    GIT_TAG origin/main
+    OPTIONS "gtest_forced_shared_crt ON CACHE BOOL FORCE"
+)
 
-    target_compile_definitions(labrador_test_exe
-        PUBLIC WITH_COMPRESSION
-    )
-    target_include_directories(labrador_test_exe
-        PUBLIC "${PROJECT_SOURCE_DIR}/include"
-    )
+file (GLOB TEST_FILES "*.cpp" "*.hpp" "*.h")
+add_executable(labrador_test_exe ${TEST_FILES})
 
-    target_link_libraries(labrador_test_exe
-        PUBLIC GTest::gtest_main
-        pthread
-    )
+target_compile_definitions(labrador_test_exe
+    PUBLIC WITH_COMPRESSION
+)
 
-    enable_testing()
+target_include_directories(labrador_test_exe
+    PUBLIC "${PROJECT_SOURCE_DIR}/include"
+)
 
-    add_test(test_bounded_queue labrador_test_exe --gtest_filter=BoundedQueueTest*)
-    add_test(test_concurrent_queue labrador_test_exe --gtest_filter=ConcurrentQueueTest*)
+target_link_libraries(labrador_test_exe
+    PUBLIC GTest::gtest_main
+    pthread
+)
+
+add_test(test_bounded_queue labrador_test_exe --gtest_filter=BoundedQueueTest*)
+add_test(test_concurrent_queue labrador_test_exe --gtest_filter=ConcurrentQueueTest*)
    
-endif(TEST)
+

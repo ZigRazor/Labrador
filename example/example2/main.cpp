@@ -6,7 +6,7 @@
 #include "LWBoundedQueue.hpp"
 #include "QueueProcessor.hpp"
 
-void elabFunc(int &value) { std::cout << "Dequeued:" << value << std::endl; }
+void elabFunc(const int &value) { std::cout << "Dequeued:" << value << std::endl; }
 
 void exampleBoundedQueue() {
   std::cout << "Example BoundedQueue Processor" << std::endl;
@@ -91,26 +91,26 @@ void exampleBoundedQueueAsync() {
   }
 }
 
-void exampleLWBoundedQueueAsync() {
-  std::cout << "Example LWBoundedQueue Async Processor" << std::endl;
+// void exampleLWBoundedQueueAsync() {
+//   std::cout << "Example LWBoundedQueue Async Processor" << std::endl;
 
-  auto intBoundedQueue =
-      std::make_shared<DogBreeds::Labrador::LWBoundedQueue<int>>(10);
+//   auto intBoundedQueue =
+//       std::make_shared<DogBreeds::Labrador::LWBoundedQueue<int>>(10);
 
-  DogBreeds::Labrador::AsyncQueueProcessor<int> qp(intBoundedQueue, elabFunc);
+//   DogBreeds::Labrador::AsyncQueueProcessor<int> qp(intBoundedQueue, elabFunc);
 
-  std::shared_ptr<DogBreeds::Labrador::AbstractQueue<int>> queueWrapperInt =
-      intBoundedQueue;
-  for (int i = 0; i < 10000; i++) {
-    queueWrapperInt->enqueue(i + 1);
-    std::cout << "Queue Size" << queueWrapperInt->size() << std::endl;
-  }
+//   std::shared_ptr<DogBreeds::Labrador::AbstractQueue<int>> queueWrapperInt =
+//       intBoundedQueue;
+//   for (int i = 0; i < 10000; i++) {
+//     queueWrapperInt->enqueue(i + 1);
+//     std::cout << "Queue Size" << queueWrapperInt->size() << std::endl;
+//   }
 
-  while (!queueWrapperInt->isEmpty()) {
-    std::cout << "Queue Size" << queueWrapperInt->size() << std::endl;
-    std::this_thread::sleep_for(std::chrono::milliseconds(10));
-  }
-}
+//   while (!queueWrapperInt->isEmpty()) {
+//     std::cout << "Queue Size" << queueWrapperInt->size() << std::endl;
+//     std::this_thread::sleep_for(std::chrono::milliseconds(10));
+//   }
+// }
 
 void exampleConcurrentQueueAsync() {
   std::cout << "Example ConcurrentQueue Async Processor" << std::endl;

@@ -9,7 +9,7 @@ using namespace DogBreeds::Labrador;
 // dalla coda
 TEST(QueueProcessorTest, ProcessItems) {
   auto queuePtr = std::make_shared<ConcurrentQueue<int>>();
-  QueueProcessor<int> processor(queuePtr, [](int &item) {
+  QueueProcessor<int> processor(queuePtr, [](const int &item) {
     // Effettua l'elaborazione dell'elemento (in questo caso, stampa l'elemento)
     std::cout << "Processed item: " << item << std::endl;
   });
