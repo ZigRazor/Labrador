@@ -4,9 +4,9 @@ name: Code Coverage
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
   pull_request:
-    branches: [ master ]
+    branches: [ main ]
 
 jobs:
   codacy-coverage-reporter:

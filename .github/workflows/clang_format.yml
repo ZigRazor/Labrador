@@ -2,9 +2,9 @@ name: clang-format Check
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "main" ]
 
 jobs:
   formatting-check:
@@ -13,9 +13,8 @@ jobs:
     strategy:
       matrix:
         path:
-          - 'benchmark'
-          - 'examples'
-          - 'include/CXXGraph'
+          - 'include'
+          - 'example'
           - 'test'
     steps:
     - uses: actions/checkout@v4
