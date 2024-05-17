@@ -15,9 +15,7 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN}}
           
-        
-      - name: publish report    
-        uses: mikeal/publish-to-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH_NAME: 'main' # your branch name goes here
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cppcheck_report
+          path: cppcheck_report.txt
