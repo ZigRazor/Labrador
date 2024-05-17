@@ -1,5 +1,6 @@
 name: cppcheck-action-test
-push:
+on:
+  push:
     branches: [ main ]
     
 jobs:
