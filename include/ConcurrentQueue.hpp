@@ -6,7 +6,6 @@
 
 #include "AbstractQueue.h"
 
-
 namespace DogBreeds {
 namespace Labrador {
 template <typename T>

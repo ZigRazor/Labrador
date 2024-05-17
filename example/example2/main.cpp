@@ -6,7 +6,6 @@
 #include "LWBoundedQueue.hpp"
 #include "QueueProcessor.hpp"
 
-
 void elabFunc(int &value) { std::cout << "Dequeued:" << value << std::endl; }
 
 void exampleBoundedQueue() {

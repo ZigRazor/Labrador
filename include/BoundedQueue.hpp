@@ -7,7 +7,6 @@
 
 #include "AbstractQueue.h"
 
-
 namespace DogBreeds {
 namespace Labrador {
 
