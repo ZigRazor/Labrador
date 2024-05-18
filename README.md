@@ -1,9 +1,7 @@
 # Labrador
-C++ Queue Elaboration Framework
-
-# Project Name
-
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
+C++ Queue Elaboration Framework
 
 ## Table of Contents
 - [Description](#description)
