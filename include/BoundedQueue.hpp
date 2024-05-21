@@ -1,3 +1,13 @@
+/**
+ * @file BoundedQueue.hpp
+ * @author ZigRazor (zigrazor@gmail.com)
+ * @brief A Bounded Queue
+ * @version 0.1
+ * @date 2024-05-20
+ *
+ * @copyright Copyright (c) 2024
+ *
+ */
 #ifndef DOGBREEDS_LABRADOR_BOUNDEDQUEUE_H
 #define DOGBREEDS_LABRADOR_BOUNDEDQUEUE_H
 
@@ -6,22 +16,53 @@
 #include <queue>
 
 #include "AbstractQueue.h"
-
 namespace DogBreeds {
 namespace Labrador {
-
+/**
+ * @brief Bounded Queue Class
+ *
+ * @tparam T the type of the Bounded Queue
+ */
 template <typename T>
 class BoundedQueue : public AbstractQueue<T> {
  private:
+  /**
+   * @brief The internal queue
+   *
+   */
   std::queue<T> queue;
+  /**
+   * @brief mutex for the internal queue operation
+   *
+   */
   mutable std::mutex mtx;
+  /**
+   * @brief Condition Variable for Enqueue
+   *
+   */
   std::condition_variable enq_cv;
+  /**
+   * @brief Condition Variable for Dequeue
+   *
+   */
   std::condition_variable deq_cv;
+  /**
+   * @brief Max Size of the queue
+   *
+   */
   size_t max_size;
 
  public:
+  /**
+   * @brief Construct a new Bounded Queue object
+   *
+   * @param size the max size of the bounded queue
+   */
   BoundedQueue(size_t size) : max_size(size) {}
 
+  /**
+   * {@inheritDoc}
+   */
   void enqueue(const T &item) override {
     {
       std::unique_lock<std::mutex> lock(mtx);
@@ -36,6 +77,9 @@ class BoundedQueue : public AbstractQueue<T> {
     deq_cv.notify_one();  // Notify waiting dequeue operations
   }
 
+  /**
+   * {@inheritDoc}
+   */
   T dequeue() override {
     T item;
     {
@@ -53,6 +97,9 @@ class BoundedQueue : public AbstractQueue<T> {
     return item;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   size_t size() const override {
     std::lock_guard<std::mutex> lock(mtx);
     return queue.size();
