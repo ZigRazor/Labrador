@@ -58,6 +58,11 @@ target_sources ( ${PROJECT_NAME} INTERFACE ${HEADERS_FILES} )
 target_compile_features( ${PROJECT_NAME} INTERFACE cxx_std_20 )
 target_include_directories( ${PROJECT_NAME} INTERFACE include/ )
 
+set_target_properties( ${PROJECT_NAME} PROPERTIES PUBLIC_HEADER "${HEADERS_FILES}")
+
+install(TARGETS ${PROJECT_NAME} PUBLIC_HEADER
+		DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/DogBreeds/Labrador)
+
 option(LABRADOR_TEST "Enable Test" OFF)
 if(TEST)
 	enable_testing()
