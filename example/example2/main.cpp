@@ -6,7 +6,9 @@
 #include "LWBoundedQueue.hpp"
 #include "QueueProcessor.hpp"
 
-void elabFunc(const int &value) { std::cout << "Dequeued:" << value << std::endl; }
+void elabFunc(const int &value) {
+  std::cout << "Dequeued:" << value << std::endl;
+}
 
 void exampleBoundedQueue() {
   std::cout << "Example BoundedQueue Processor" << std::endl;
@@ -97,7 +99,8 @@ void exampleBoundedQueueAsync() {
 //   auto intBoundedQueue =
 //       std::make_shared<DogBreeds::Labrador::LWBoundedQueue<int>>(10);
 
-//   DogBreeds::Labrador::AsyncQueueProcessor<int> qp(intBoundedQueue, elabFunc);
+//   DogBreeds::Labrador::AsyncQueueProcessor<int> qp(intBoundedQueue,
+//   elabFunc);
 
 //   std::shared_ptr<DogBreeds::Labrador::AbstractQueue<int>> queueWrapperInt =
 //       intBoundedQueue;
