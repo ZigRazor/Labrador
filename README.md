@@ -106,3 +106,8 @@ If you have any questions, suggestions, or feedback, feel free to reach out:
 We would like to thank the following individuals for their support:
 
 [![Contributors](https://contrib.rocks/image?repo=zigrazor/Labrador)](https://github.com/ZigRazor/Labrador/graphs/contributors) 
+
+## Credits
+
+Photo of <a href="https://unsplash.com/it/@wildlittlethingsphoto?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Helena Lopes</a> on <a href="https://unsplash.com/it/foto/golden-retriever-seduto-a-terra-durante-il-giorno-ueMLnIwlrlE?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
+  
